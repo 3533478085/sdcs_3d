@@ -1,0 +1,268 @@
+{
+  "version": "1.0",
+  "created_at": "2026-04-28",
+  "total_events": 6,
+  "total_shapes": 10,
+  "events": [
+    {
+      "id": 1,
+      "event_name": "红五到遵义和红三到赤水",
+      "event_order": 1,
+      "description": "红五团向遵义进军，红三军团在其他队伍左侧前进到土城，两支队伍同时行动",
+      "play_mode": "simultaneous",
+      "shapes": [
+        {
+          "plot_id": "plot_01_01",
+          "type": "AttackArrow",
+          "styleConfig": {
+            "kind": "polygon",
+            "fillColor": "rgba(255, 0, 0, 0.45)",
+            "outlineColor": "rgb(208, 59, 59)",
+            "outlineWidth": 3,
+            "lineColor": "rgba(59, 178, 208, 1)",
+            "lineWidth": 3
+          },
+          "points": [
+            {"lon": 107.19185164294271, "lat": 27.51280585619472, "height": 2075.807711120911},
+            {"lon": 107.16361548982684, "lat": 27.488312325455077, "height": 2143.5364333282632},
+            {"lon": 106.92775513016477, "lat": 27.696287605082354, "height": 2272.237422616949}
+          ],
+          "play_order": 1,
+          "animation_duration": 2000
+        },
+        {
+          "plot_id": "plot_01_02",
+          "type": "AttackArrow",
+          "styleConfig": {
+            "kind": "polygon",
+            "fillColor": "rgba(255, 0, 0, 0.45)",
+            "outlineColor": "rgb(208, 59, 59)",
+            "outlineWidth": 3,
+            "lineColor": "rgba(59, 178, 208, 1)",
+            "lineWidth": 3
+          },
+          "points": [
+            {"lon": 106.78719584734324, "lat": 27.43338700062268, "height": 3065.9250425081573},
+            {"lon": 106.83239167438066, "lat": 27.42552948685089, "height": 2747.6225814209497},
+            {"lon": 106.90097198757282, "lat": 27.657209831633168, "height": 2483.4462888397975},
+            {"lon": 106.53329908243623, "lat": 28.026089627270338, "height": 1994.9651563024847},
+            {"lon": 106.02627366267106, "lat": 28.217288361027336, "height": 1986.6548056684558}
+          ],
+          "play_order": 2,
+          "animation_duration": 2000
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "event_name": "核心纵队到桐梓和红九到桐梓",
+      "event_order": 2,
+      "description": "核心纵队从遵义向桐梓进军，红九团从绥阳向桐梓进军，两支队伍同时行动",
+      "play_mode": "simultaneous",
+      "shapes": [
+        {
+          "plot_id": "plot_02_01",
+          "type": "AttackArrow",
+          "styleConfig": {
+            "kind": "polygon",
+            "fillColor": "rgba(255, 0, 0, 0.45)",
+            "outlineColor": "rgb(208, 59, 59)",
+            "outlineWidth": 3,
+            "lineColor": "rgba(59, 178, 208, 1)",
+            "lineWidth": 3
+          },
+          "points": [
+            {"lon": 106.91548617824351, "lat": 27.714389625686945, "height": 1999.9960772924878},
+            {"lon": 106.95011808933415, "lat": 27.717280841257654, "height": 2107.7634986009657},
+            {"lon": 106.9263988218288, "lat": 27.77557574129251, "height": 2137.1658226142836},
+            {"lon": 107.01043467901172, "lat": 27.83534807705959, "height": 1996.5203131323303},
+            {"lon": 106.87997634458164, "lat": 27.975277959393242, "height": 2699.2784258108454},
+            {"lon": 106.81876051970669, "lat": 28.113548159132417, "height": 2561.403653122333}
+          ],
+          "play_order": 1,
+          "animation_duration": 2000
+        },
+        {
+          "plot_id": "plot_02_02",
+          "type": "AttackArrow",
+          "styleConfig": {
+            "kind": "polygon",
+            "fillColor": "rgba(255, 0, 0, 0.45)",
+            "outlineColor": "rgb(208, 59, 59)",
+            "outlineWidth": 3,
+            "lineColor": "rgba(59, 178, 208, 1)",
+            "lineWidth": 3
+          },
+          "points": [
+            {"lon": 107.19753469771614, "lat": 27.98028957862224, "height": 2124.174411017504},
+            {"lon": 107.203629335449, "lat": 27.956399289369656, "height": 2420.4103961817846},
+            {"lon": 106.98339565246681, "lat": 27.866805201501677, "height": 2328.6041811902214},
+            {"lon": 106.83111133285585, "lat": 28.11507161422254, "height": 2254.6431148455245}
+          ],
+          "play_order": 2,
+          "animation_duration": 2000
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "event_name": "红一桐梓到习水",
+      "event_order": 3,
+      "description": "红一团从桐梓向习水进军",
+      "play_mode": "sequential",
+      "shapes": [
+        {
+          "plot_id": "plot_03_01",
+          "type": "AttackArrow",
+          "styleConfig": {
+            "kind": "polygon",
+            "fillColor": "rgba(255, 0, 0, 0.45)",
+            "outlineColor": "rgb(208, 59, 59)",
+            "outlineWidth": 3,
+            "lineColor": "rgba(59, 178, 208, 1)",
+            "lineWidth": 3
+          },
+          "points": [
+            {"lon": 106.809504401485, "lat": 28.120777673588016, "height": 2284.0204705191345},
+            {"lon": 106.84726156959604, "lat": 28.123908223745797, "height": 2284.4507899233863},
+            {"lon": 106.86680230475791, "lat": 28.403565730110778, "height": 1546.6116560295006},
+            {"lon": 106.70614785224011, "lat": 28.4169156929011, "height": 2356.8251331160427},
+            {"lon": 106.6176637785177, "lat": 28.489709353365086, "height": 2593.833953180632},
+            {"lon": 106.2216896199379, "lat": 28.313926494142226, "height": 2804.1858656101995}
+          ],
+          "play_order": 1,
+          "animation_duration": 2000
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "event_name": "红一到土城到猿猴场",
+      "event_order": 4,
+      "description": "红一团从习水经土城向猿猴场进军",
+      "play_mode": "sequential",
+      "shapes": [
+        {
+          "plot_id": "plot_04_01",
+          "type": "AttackArrow",
+          "styleConfig": {
+            "kind": "polygon",
+            "fillColor": "rgba(255, 0, 0, 0.45)",
+            "outlineColor": "rgb(208, 59, 59)",
+            "outlineWidth": 3,
+            "lineColor": "rgba(59, 178, 208, 1)",
+            "lineWidth": 3
+          },
+          "points": [
+            {"lon": 106.2209398863217, "lat": 28.30939898329791, "height": 2805.9079493502027},
+            {"lon": 106.21737728244156, "lat": 28.32673971142102, "height": 3078.6676974587217},
+            {"lon": 105.96734901103592, "lat": 28.274020804154716, "height": 1097.8492690272299},
+            {"lon": 105.93351835913309, "lat": 28.36683111154409, "height": 694.9079563380187}
+          ],
+          "play_order": 1,
+          "animation_duration": 2000
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "event_name": "赤水川军反打和红一第一二到猿猴场到赤水",
+      "event_order": 5,
+      "description": "赤水川军发起反击，同时红一第一二师从猿猴场向赤水进军",
+      "play_mode": "simultaneous",
+      "shapes": [
+        {
+          "plot_id": "plot_05_01",
+          "type": "DoubleArrow",
+          "styleConfig": {
+            "kind": "polygon",
+            "fillColor": "rgba(59, 178, 208, 0.45)",
+            "outlineColor": "rgba(59, 178, 208, 1)",
+            "outlineWidth": 3,
+            "lineColor": "rgba(59, 178, 208, 1)",
+            "lineWidth": 3
+          },
+          "points": [
+            {"lon": 105.67459799996448, "lat": 28.598938207999165, "height": 1440.0420950683388},
+            {"lon": 105.69959055274313, "lat": 28.6155816532327, "height": 1048.102381918783},
+            {"lon": 105.89168011143504, "lat": 28.52647434808442, "height": 1326.529058257466},
+            {"lon": 105.73014516339796, "lat": 28.52128123697037, "height": 1176.3713727711483}
+          ],
+          "play_order": 1,
+          "animation_duration": 2000
+        },
+        {
+          "plot_id": "plot_05_02",
+          "type": "DoubleArrow",
+          "styleConfig": {
+            "kind": "polygon",
+            "fillColor": "rgba(255, 0, 0, 0.45)",
+            "outlineColor": "rgb(216, 54, 54)",
+            "outlineWidth": 3,
+            "lineColor": "rgba(59, 178, 208, 1)",
+            "lineWidth": 3
+          },
+          "points": [
+            {"lon": 105.93471331363703, "lat": 28.35132382728258, "height": 1699.3701435950684},
+            {"lon": 105.96302075330728, "lat": 28.386136496881235, "height": 2613.3643704323827},
+            {"lon": 105.89404879615435, "lat": 28.525431814036317, "height": 850.0602505423117},
+            {"lon": 105.72870749623739, "lat": 28.51830942864885, "height": 619.3340738915482}
+          ],
+          "play_order": 2,
+          "animation_duration": 2000
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "event_name": "川军箭滩反打和红九到箭滩",
+      "event_order": 6,
+      "description": "川军在箭滩发起反击，红九军团向箭滩进军",
+      "play_mode": "simultaneous",
+      "shapes": [
+        {
+          "plot_id": "plot_06_01",
+          "type": "AttackArrow",
+          "styleConfig": {
+            "kind": "polygon",
+            "fillColor": "rgba(59, 178, 208, 0.45)",
+            "outlineColor": "rgba(59, 178, 208, 1)",
+            "outlineWidth": 3,
+            "lineColor": "rgba(59, 178, 208, 1)",
+            "lineWidth": 3
+          },
+          "points": [
+            {"lon": 105.9360627550597, "lat": 28.71795647145148, "height": 718.1123942429027},
+            {"lon": 105.95206964004804, "lat": 28.726085702746563, "height": 706.6300016320265},
+            {"lon": 106.06482422313448, "lat": 28.60651096922422, "height": 798.6012695584857}
+          ],
+          "play_order": 1,
+          "animation_duration": 2000
+        },
+        {
+          "plot_id": "plot_06_02",
+          "type": "AttackArrow",
+          "styleConfig": {
+            "kind": "polygon",
+            "fillColor": "rgba(255, 0, 0, 0.45)",
+            "outlineColor": "rgb(208, 59, 59)",
+            "outlineWidth": 3,
+            "lineColor": "rgba(59, 178, 208, 1)",
+            "lineWidth": 3
+          },
+          "points": [
+            {"lon": 106.19538608650892, "lat": 28.317333776865638, "height": 2958.8413094126186},
+            {"lon": 106.22043376385959, "lat": 28.317461245515666, "height": 2872.4293986882344},
+            {"lon": 106.20221078137405, "lat": 28.39248061663803, "height": 2522.62359144042},
+            {"lon": 106.28095616104682, "lat": 28.419087912441363, "height": 1509.209084854698},
+            {"lon": 106.16194054170717, "lat": 28.52038522552641, "height": 1575.4192502255382},
+            {"lon": 106.09341078260968, "lat": 28.553892968896147, "height": 861.3083689864807},
+            {"lon": 106.06542992631547, "lat": 28.604319761427966, "height": 790.3741348996241}
+          ],
+          "play_order": 2,
+          "animation_duration": 2000
+        }
+      ]
+    }
+  ]
+}

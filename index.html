@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>四渡赤水</title>
+    <script src="./Cesium/Cesium.js"></script>
+    <link rel="stylesheet" href="./Cesium/Widgets/widgets.css">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./node_modules/cesium-plot-js/dist/CesiumPlot.umd.js"></script>
+</head>
+<body>
+    <div id="cesiumContainer"></div>
+    <!-- 相机参数显示面板 -->
+    <div id="cameraInfo"></div>
+    <script>
+        // 设置 Cesium Ion token
+        Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIwNzYyODViZi1jYTY0LTRhZDEtOTFiYi0xODZjZGJjOWJhYmEiLCJpZCI6MzY4NzExLCJpYXQiOjE3Nzc0NjczODV9.Qw_Iba7Drk8pFmH6Y0FI-J7gN9uQStDNV9uX_JiwzDg';
+        
+        // 初始化 Cesium 视图，禁用时间轴、动画和搜索按钮
+        async function initCesium() {
+            try {
+                // 创建世界地形
+                const terrainProvider = await Cesium.createWorldTerrainAsync();
+                
+                // 初始化视图，禁用不必要的控件
+                const viewer = new Cesium.Viewer('cesiumContainer', {
+                    timeline: false,           // 禁用时间轴
+                    animation: false,          // 禁用动画控件
+                    searchButton: false,       // 禁用搜索按钮
+                    navigationHelpButton: false, // 禁用导航帮助按钮
+                    geocoder: false,           // 禁用地理编码器（搜索框）
+                    fullscreenButton: false,   // 禁用全屏按钮
+                    terrainProvider: terrainProvider // 添加世界地形
+                    // //homeButton: false,//首页按钮隐藏
+                    //selectionIndicator: false,//选择指示器隐藏
+
+                });
+                
+                // 隐藏版权信息
+                viewer.cesiumWidget.creditContainer.style.display = "none";
+                // 设置地形垂直夸大系数
+                viewer.scene.verticalExaggeration = 2.5;
+
+                // 设置默认相机位置和朝向（四渡赤水区域）
+                const defaultView = {
+                    destination: Cesium.Cartesian3.fromDegrees(106.844587, 28.351567, 1546871.86),
+                    orientation: {
+                        heading: Cesium.Math.toRadians(360.00),
+                        pitch: Cesium.Math.toRadians(-90.00),
+                        roll: Cesium.Math.toRadians(0.00)
+                    }
+                };
+
+                // 设置默认视角
+                viewer.camera.setView(defaultView);
+
+                // 主页按钮行为，使用当前默认视角
+                viewer.homeButton.viewModel.command.beforeExecute.addEventListener(function(e) {
+                    e.cancel = true;  // 取消默认行为
+                    viewer.camera.flyTo(defaultView);  // 飞回到默认视角
+                });
+
+                // 获取相机参数显示面板
+                const cameraInfo = document.getElementById('cameraInfo');
+                
+                // 更新相机参数的函数
+                function updateCameraInfo() {
+                    const camera = viewer.camera;
+                    // 获取相机位置（经纬度和高度）
+                    const position = camera.positionCartographic;
+                    const longitude = Cesium.Math.toDegrees(position.longitude).toFixed(6);
+                    const latitude = Cesium.Math.toDegrees(position.latitude).toFixed(6);
+                    const height = position.height.toFixed(2);
+                    // 获取相机朝向（角度）
+                    const heading = Cesium.Math.toDegrees(camera.heading).toFixed(2);
+                    const pitch = Cesium.Math.toDegrees(camera.pitch).toFixed(2);
+                    const roll = Cesium.Math.toDegrees(camera.roll).toFixed(2);
+                    // 构建显示内容
+                    const info = `
+                        <strong>相机参数：</strong><br>
+                        经度: ${longitude}°<br>
+                        纬度: ${latitude}°<br>
+                        高度: ${height} 米<br>
+                        朝向: ${heading}°<br>
+                        俯仰: ${pitch}°<br>
+                        翻滚: ${roll}°
+                    `;
+                    // 更新面板内容
+                    cameraInfo.innerHTML = info;
+                }
+                
+                // 初始更新相机参数
+                updateCameraInfo();
+                // 监听相机移动结束事件，实时更新参数
+                viewer.camera.moveEnd.addEventListener(updateCameraInfo);
+
+                // 添加点位按钮函数
+                async function addLocationButtons() {
+                    try {
+                        // 从 GeoServer 获取城市点位数据
+                        const geoserverUrl = '/geoserver/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=demo1:city&outputFormat=application/json';
+                        const response = await fetch(geoserverUrl);
+                        const contentType = response.headers.get('content-type');
+
+                        // 检查响应状态
+                        if (!response.ok) {
+                            console.error('GeoServer 请求失败:', response.status, response.statusText);
+                            return;
+                        }
+
+                        // 读取响应文本并解析为 JSON
+                        const text = await response.text();
+                        console.log('GeoServer 响应:', text.substring(0, 500));
+
+                        let geojson;
+                        try {
+                            geojson = JSON.parse(text);
+                        } catch (parseError) {
+                            console.error('JSON 解析失败:', parseError);
+                            return;
+                        }
+
+                        // 处理获取到的点位数据
+                        if (geojson.features && geojson.features.length > 0) {
+                            // 遍历每个点位
+                            geojson.features.forEach((feature) => {
+                                const properties = feature.properties;
+                                const geometry = feature.geometry;
+
+                                // 提取经纬度和城市名称
+                                const longitude = geometry.coordinates[0];
+                                const latitude = geometry.coordinates[1];
+                                const name = properties.city_name || '未知';
+
+                                // 跳过缺少经纬度的点位
+                                if (!longitude || !latitude) {
+                                    console.error('点位数据缺少经纬度信息:', name);
+                                    return;
+                                }
+
+                                // 检查是否有完整的相机参数
+                                const hasCameraParams = 
+                                    properties.camera_lon != null &&
+                                    properties.camera_lat != null &&
+                                    properties.camera_hei != null &&
+                                    properties.camera_hea != null &&
+                                    properties.camera_pit != null &&
+                                    properties.camera_rol != null;
+
+                                // 构建相机参数对象
+                                const cameraParams = hasCameraParams ? {
+                                    longitude: properties.camera_lon,
+                                    latitude: properties.camera_lat,
+                                    height: properties.camera_hei,
+                                    heading: properties.camera_hea,
+                                    pitch: properties.camera_pit,
+                                    roll: properties.camera_rol
+                                } : null;
+
+                                // 编码城市名称用于 SVG
+                                const label = encodeURIComponent(name);
+
+                                // 创建点位实体
+                                const entity = viewer.entities.add({
+                                    position: Cesium.Cartesian3.fromDegrees(longitude, latitude, 100),
+                                    billboard: {
+                                        image: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="30" viewBox="0 0 60 30"><rect x="2" y="2" width="56" height="26" rx="4" fill="red" opacity="0.8" stroke="white" stroke-width="2"/><text x="30" y="20" text-anchor="middle" fill="white" font-size="12" font-weight="bold">${label}</text></svg>`,
+                                        width: 60,
+                                        height: 30,
+                                        verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+                                    },
+                                    cameraParams: cameraParams
+                                });
+
+                                // 存储实体是否有相机参数
+                                entity.hasCameraParams = hasCameraParams;
+                            });
+
+                            // 添加统一的点击事件处理器
+                            viewer.screenSpaceEventHandler.setInputAction((click) => {
+                                const pickedObject = viewer.scene.pick(click.position);
+                                
+                                // 检查是否点击到了实体
+                                if (Cesium.defined(pickedObject) && pickedObject.id) {
+                                    const entity = pickedObject.id;
+                                    
+                                    // 检查实体是否有相机参数
+                                    if (entity.hasCameraParams && entity.cameraParams) {
+                                        // 执行相机漫游
+                                        viewer.camera.flyTo({
+                                            destination: Cesium.Cartesian3.fromDegrees(
+                                                entity.cameraParams.longitude,
+                                                entity.cameraParams.latitude,
+                                                entity.cameraParams.height
+                                            ),
+                                            orientation: {
+                                                heading: Cesium.Math.toRadians(entity.cameraParams.heading),
+                                                pitch: Cesium.Math.toRadians(entity.cameraParams.pitch),
+                                                roll: Cesium.Math.toRadians(entity.cameraParams.roll)
+                                            },
+                                            duration: 3 // 漫游动画持续时间（秒）
+                                        });
+                                    }
+                                }
+                            }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+                            console.log('点位按钮添加成功');
+                        } else {
+                            console.error('未找到点位数据');
+                        }
+                    } catch (error) {
+                        console.error('添加点位按钮失败:', error);
+                    }
+                }
+
+                // 调用添加点位按钮的函数
+                addLocationButtons();
+
+                // 加载并渲染军事态势数据
+                await loadMilitaryEvents(viewer, Cesium);
+
+            } catch (error) {
+                console.error('初始化 Cesium 时出错:', error);
+            }
+        }
+
+        // 加载军事态势数据
+        async function loadMilitaryEvents(viewer, Cesium) {
+            try {
+                const response = await fetch('./events_data.json');
+                const eventsData = await response.json();
+
+                console.log('军事态势数据加载成功:', eventsData);
+
+                // 渲染所有图形
+                eventsData.events.forEach((event) => {
+                    event.shapes.forEach((shape) => {
+                        const cartesianPoints = shape.points.map(p => 
+                            Cesium.Cartesian3.fromDegrees(p.lon, p.lat, p.height)
+                        );
+
+                        const style = {
+                            material: Cesium.Color.fromCssColorString(shape.styleConfig.fillColor),
+                            outlineMaterial: Cesium.Color.fromCssColorString(shape.styleConfig.outlineColor),
+                            outlineWidth: shape.styleConfig.outlineWidth,
+                            lineMaterial: Cesium.Color.fromCssColorString(shape.styleConfig.lineColor),
+                            lineWidth: shape.styleConfig.lineWidth
+                        };
+
+                        CesiumPlot.createGeometryFromData(Cesium, viewer, {
+                            type: shape.type,
+                            style: style,
+                            cartesianPoints: cartesianPoints
+                        });
+
+                        console.log('创建图形:', shape.plot_id);
+                    });
+                });
+
+                console.log('所有图形创建完成');
+
+            } catch (error) {
+                console.error('加载军事态势数据失败:', error);
+            }
+        }
+        
+        // 初始化 Cesium
+        initCesium();
+    </script>
+</body>
+</html>
